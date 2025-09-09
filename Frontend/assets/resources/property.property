@@ -1,0 +1,12 @@
+/*
+var fe_url = "http://127.0.0.1:8000";
+*/
+
+
+var fe_url = "https://ai-bis.cfapps.eu10.hana.ondemand.com"
+
+
+var profiler_url = "https://sap-integration-platform-api.cfapps.eu10.hana.ondemand.com"
+
+var aibis_url = "https://ai-bis-credential-store.cfapps.eu10.hana.ondemand.com"
+
