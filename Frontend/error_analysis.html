@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error Analysis Dashboard</title>
+  <link rel="stylesheet" href="assets/css/error_analysis.css">
+  <!-- Material Symbols (Outlined) -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Left: Error Analysis Cards -->
+    <div class="error-analysis-section">
+      <div class="error-title">Error Analysis</div>
+      <div class="error-cards-list">
+        <div class="error-card card-active" data-card="master" onclick="selectCard('master')">
+          <span class="icon error-db material-symbols-outlined">database</span>
+          <div class="error-name">Master Data Missing</div>
+          <div class="error-value">125</div>
+          <div class="error-change positive">+15.3% from last week</div>
+        </div>
+        <div class="error-card" data-card="partner" onclick="selectCard('partner')">
+          <span class="icon error-user material-symbols-outlined">person</span>
+          <div class="error-name">Partner Profile Issue</div>
+          <div class="error-value">89</div>
+          <div class="error-change">-8.1% from last week</div>
+        </div>
+        <div class="error-card" data-card="mapping" onclick="selectCard('mapping')">
+          <span class="icon error-warning material-symbols-outlined">warning</span>
+          <div class="error-name">Mapping Error</div>
+          <div class="error-value">52</div>
+          <div class="error-change warning">+5.7% from last week</div>
+        </div>
+        <div class="error-card" data-card="technical" onclick="selectCard('technical')">
+          <span class="icon error-wrench material-symbols-outlined">build</span>
+          <div class="error-name">Technical Failure</div>
+          <div class="error-value">31</div>
+          <div class="error-change info">+1.2% from last week</div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Right: Fixed Vertical Center Details Card -->
+    <div class="right-pane">
+      <div class="solution-section card-content" id="dynamic-card">
+        <!-- Card content will be injected here via JS -->
+      </div>
+    </div>
+  </div>
+  <script src="assets/js/error_analysis.js"></script>
+</body>
+</html>

@@ -174,8 +174,12 @@
         </div>
 
 
+
         <script>
-            $('#side-bar').load("sidebar.html");
+            $('#side-bar').load("sidebar.html", function() {
+                // After sidebar loads, load overview by default
+                loadContent('overview.html');
+            });
 
             $(window).bind("load", function () {
                 $(document).ready(function () {
@@ -184,7 +188,6 @@
                         $("#ams_side_menu").addClass("mm-show")
                         $("#message_monitoring_menu").addClass("mm-active")
                     }, 300);
-
                 });
             });
 

@@ -17,11 +17,38 @@
 </style>
 <script>
 function loadContent(page) {
-    fetch(page)
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('mainContent').innerHTML = html;
-        });
+	fetch(page)
+		.then(response => response.text())
+		.then(html => {
+			document.getElementById('mainContent').innerHTML = html;
+			if (page === 'overview.html') {
+				// Ensure Chart.js is loaded before overview.js
+				function loadOverviewScript() {
+					var oldScript = document.getElementById('overviewjs');
+					if (oldScript) oldScript.remove();
+					var script = document.createElement('script');
+					script.src = './assets/js/overview.js';
+					script.id = 'overviewjs';
+					document.body.appendChild(script);
+				}
+				if (!window.Chart) {
+					var chartScript = document.createElement('script');
+					chartScript.src = './assets/js/chart.js';
+					chartScript.onload = loadOverviewScript;
+					document.body.appendChild(chartScript);
+				} else {
+					loadOverviewScript();
+				}
+			} else if (page === 'error_analysis.html') {
+				// Load error_analysis.js after error_analysis.html is injected
+				var oldScript = document.getElementById('erroranalysisjs');
+				if (oldScript) oldScript.remove();
+				var script = document.createElement('script');
+				script.src = './assets/js/error_analysis.js';
+				script.id = 'erroranalysisjs';
+				document.body.appendChild(script);
+			}
+		});
 }
 </script>
 
@@ -75,31 +102,41 @@ function loadContent(page) {
 					</li> -->
 					<!-- <li class="app-sidebar__heading">Dashboard</li> -->
 					<li>
-						<a href="dashboard.html" onclick="createURL('dashboard.html')" id="dashboard_side_menu" class="" style="margin-bottom: 10px; margin-top: 20px;">
+						<a href="dashboard.html" class="main-menu" onclick="loadContent('overview.html')" style="margin-bottom: 10px; margin-top: 20px;">
 							<i class="metismenu-icon fas fa-rocket"></i>
-							Dashboard
+							Overview
 						</a>
-						<div>
-						<a href="#" class="main-menu" onclick="loadContent('partner-drilldown.html')" data-target="testing_side_menu">
+						
+
+						<a href="#" class="main-menu" onclick="loadContent('#.html')" style="margin-bottom: 10px; margin-top: 20px;">
+							<i class="metismenu-icon fas fa-wave-square"></i>
+							Real-time Monitoring
+						</a>
+						<a href="#" class="main-menu" onclick="loadContent('error_analysis.html')" style="margin-bottom: 10px; margin-top: 20px;">
+							<i class="metismenu-icon fas fa-bug"></i>
+							Error Analysis
+						</a>
+						<a href="#" class="main-menu" onclick="loadContent('partner-drilldown.html')" style="margin-bottom: 10px; margin-top: 20px;">
 							<i class="metismenu-icon fa-solid fa-network-wired"></i>
 							Partner Drill Down
-							
 						</a>
-						</div>
-						<div style="margin-bottom: 10px;">
-						<a href="#" class="main-menu" data-target="testing_side_menu">
-							<!-- <i class="metismenu-icon pe-7s-star"></i> -->
-							<i class="metismenu-icon fas fa-star"></i>
-							AI Assistant
-							
+						<a href="#" class="main-menu" onclick="loadContent('#')" style="margin-bottom: 10px; margin-top: 20px;">
+							<i class="metismenu-icon fas fa-comments"></i>
+							Resolution Assistant
 						</a>
-						</div>
-						<div>
-						<a href="#" class="main-menu" data-target="testing_side_menu">
-							<i class="metismenu-icon fas fa-project-diagram"></i>
-							AI Resolution Center
-							
+						<a href="#" class="main-menu" onclick="loadContent('#')" style="margin-bottom: 10px; margin-top: 20px;">
+							<i class="metismenu-icon fas fa-bell"></i>
+							Alerts & Notifications
 						</a>
+						<a href="#" class="main-menu" onclick="loadContent('#')" style="margin-bottom: 10px; margin-top: 20px;">
+							<i class="metismenu-icon fas fa-file-alt"></i>
+							Reports & Audit
+						</a>
+						<a href="#" class="main-menu" onclick="loadContent('#')" style="margin-bottom: 10px; margin-top: 20px;">
+							<i class="metismenu-icon fas fa-cog"></i>
+							Admin & Config
+						</a>
+
 						</div>
 					</li>
 					
