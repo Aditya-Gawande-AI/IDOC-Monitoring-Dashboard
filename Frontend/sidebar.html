@@ -16,7 +16,13 @@
 	}
 </style>
 <script>
-
+function loadContent(page) {
+    fetch(page)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('mainContent').innerHTML = html;
+        });
+}
 </script>
 
 <body>
@@ -74,9 +80,8 @@
 							Dashboard
 						</a>
 						<div>
-						<a href="#" class="main-menu" data-target="testing_side_menu">
+						<a href="#" class="main-menu" onclick="loadContent('partner-drilldown.html')" data-target="testing_side_menu">
 							<i class="metismenu-icon fa-solid fa-network-wired"></i>
-							<!-- <i class="metismenu-icon fas fa-project-diagram"></i> -->
 							Partner Drill Down
 							
 						</a>
