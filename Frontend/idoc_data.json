@@ -1,0 +1,90 @@
+{
+  "dashboard": {
+    "total": 5981,
+    "errors": 1334,
+    "successful": 8,
+    "processing": 4639,
+    "error_list": [
+      {
+        "idoc_no": "0000000000049024",
+        "msg_type": "DEBMAS",
+        "status": "ERROR",
+        "error_msg": "Could not find code page for receiving system",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000049025",
+        "msg_type": "DEBMAS",
+        "status": "ERROR",
+        "error_msg": "Could not find code page for receiving system",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000004074",
+        "msg_type": "DESADV",
+        "status": "ERROR",
+        "error_msg": "Function module not allowed: &",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000004076",
+        "msg_type": "DESADV",
+        "status": "ERROR",
+        "error_msg": "Function module not allowed: &",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000004079",
+        "msg_type": "DESADV",
+        "status": "ERROR",
+        "error_msg": "Function module not allowed: &",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000004081",
+        "msg_type": "DESADV",
+        "status": "ERROR",
+        "error_msg": "Function module not allowed: &",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000004392",
+        "msg_type": "DESADV",
+        "status": "ERROR",
+        "error_msg": "Essential transfer parameters are missing in record: & &",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000004393",
+        "msg_type": "DESADV",
+        "status": "ERROR",
+        "error_msg": "Essential transfer parameters are missing in record: & &",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000006058",
+        "msg_type": "GLMAST",
+        "status": "ERROR",
+        "error_msg": "Chart of accounts & not defined",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      },
+      {
+        "idoc_no": "0000000000006058",
+        "msg_type": "GLMAST",
+        "status": "ERROR",
+        "error_msg": "Chart of accounts & not defined",
+        "partner": "S89CLNT200",
+        "timestamp": "2024-01-15 10:30:00"
+      }
+    ]
+  }
+}
