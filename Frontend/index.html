@@ -1,111 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SAP IDOC Monitor</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="main-header">
-    <div class="header-content">
-      <div class="header-text">
-        <h1>SAP IDOC Monitor</h1>
-        <p class="subtitle">Real-time monitoring and AI-powered error resolution</p>
-      </div>
-      <div class="status-bar">
-        <span class="status-dot"></span> Online
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1 class="main-title">AI-powered error resolution</h1>
+      <div class="status-indicator">
+        <span class="status-dot"></span> 
+        <span class="status-text">Online</span>
       </div>
     </div>
-    <hr class="header-divider">
-  </header>
 
-  <div class="dashboard">
-    <div class="tile tile1">
-      <div class="tile-header">
-        <h2>Total IDOCs Today</h2>
-        <span class="tile-icon">📊</span>
+    <!-- Metrics Cards -->
+    <div class="metrics-cards">
+      <div class="metric-card">
+        <div class="metric-title">Total IDocs (Today)</div>
+        <div class="metric-value tile1-count">Loading...</div>
+        <div class="metric-desc tile1-change">--</div>
       </div>
-      <p class="count">Loading...</p>
-      <p class="change">--</p>
+      <div class="metric-card error-card">
+        <div class="metric-title">Active Errors</div>
+        <div class="metric-value tile2-count">Loading...</div>
+        <div class="metric-desc tile2-change">--</div>
+      </div>
+      <div class="metric-card success-card">
+        <div class="metric-title">Successfully Processed</div>
+        <div class="metric-value tile3-count">Loading...</div>
+        <div class="metric-desc tile3-change">--</div>
+      </div>
     </div>
-    <div class="tile tile2">
-      <div class="tile-header">
-        <h2>Active Errors</h2>
-        <span class="tile-icon">⚠️</span>
+
+    <!-- Content Section -->
+    <div class="content-section">
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">IDOC Error Analysis</h2>
+        <div class="section-controls">
+          <input type="text" id="search-input" placeholder="Search IDOCs..." class="search-input">
+          <button onclick="fetchData()" class="refresh-btn">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
       </div>
-      <p class="count">Loading...</p>
-      <p class="change">--</p>
-    </div>
-    <div class="tile tile3">
-      <div class="tile-header">
-        <h2>Successfully Processed</h2>
-        <span class="tile-icon">✅</span>
+      
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <div class="filter-group">
+          <label>Partner:</label>
+          <select id="partner-filter" class="filter-select">
+            <option value="">All Partners</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Message Type:</label>
+          <select id="msgtype-filter" class="filter-select">
+            <option value="">All Types</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>From:</label>
+          <input type="date" id="date-from" class="filter-date">
+        </div>
+        <div class="filter-group">
+          <label>To:</label>
+          <input type="date" id="date-to" class="filter-date">
+        </div>
+        <button onclick="applyFilters()" class="filter-btn">Apply Filters</button>
+        <button onclick="clearFilters()" class="clear-btn">Clear</button>
       </div>
-      <p class="count">Loading...</p>
-      <p class="change">--</p>
-    </div>
-    <div class="tile tile4">
-      <div class="tile-header">
-        <h2>Processing Queue</h2>
-        <span class="tile-icon">⏳</span>
-      </div>
-      <p class="count">Loading...</p>
-      <p class="change">--</p>
+      
+      <!-- Data Table -->
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>IDOC Number</th>
+            <th>Message Type</th>
+            <th>Status</th>
+            <th>Error Message</th>
+            <th>Partner</th>
+            <th>Timestamp</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="7">Loading error data...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <div class="table-section">
-    <div class="table-header">
-      <h2 class="table-title">IDOC Error List</h2>
-      <div class="table-controls">
-        <input type="text" id="search-input" placeholder="Search IDOCs..." class="search-input">
-        <button onclick="fetchData()" class="refresh-btn">⟳</button>
-      </div>
-    </div>
-    <div class="filter-section">
-      <div class="filter-group">
-        <label>Partner:</label>
-        <select id="partner-filter" class="filter-select">
-          <option value="">All Partners</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>Message Type:</label>
-        <select id="msgtype-filter" class="filter-select">
-          <option value="">All Types</option>
-        </select>
-      </div>
-      <div class="filter-group">
-        <label>From:</label>
-        <input type="date" id="date-from" class="filter-date">
-      </div>
-      <div class="filter-group">
-        <label>To:</label>
-        <input type="date" id="date-to" class="filter-date">
-      </div>
-      <button onclick="applyFilters()" class="filter-btn">Apply Filters</button>
-      <button onclick="clearFilters()" class="clear-btn">Clear</button>
-    </div>
-    <table class="error-table">
-    <thead>
-      <tr>
-        <th>IDOC Number</th>
-        <th>Message Type</th>
-        <th>Status</th>
-        <th>Error Message</th>
-        <th>Partner</th>
-        <th>Timestamp</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td colspan="7">Loading error data...</td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
   <script src="script.js"></script>
 </body>
 </html>
