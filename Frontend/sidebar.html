@@ -47,6 +47,11 @@ function loadContent(page) {
 				script.src = './assets/js/error_analysis.js';
 				script.id = 'erroranalysisjs';
 				document.body.appendChild(script);
+
+				// Inject chatbot assets only for Error Analysis
+				injectChatbotAssets();
+				// Ensure chatbot visible
+				document.body.classList.add('show-chatbot');
 			} else if (page === 'index.html') {
 				// Load IDOC monitoring scripts
 				var oldScript = document.getElementById('idocjs');
@@ -55,6 +60,50 @@ function loadContent(page) {
 				script.src = './script.js';
 				script.id = 'idocjs';
 				document.body.appendChild(script);
+
+				// Inject chatbot assets only for IDOC Monitoring
+				injectChatbotAssets();
+				// Ensure chatbot visible
+				document.body.classList.add('show-chatbot');
+			}
+
+			// If other pages are loaded, hide chatbot and teardown any existing instance
+			if (page !== 'index.html' && page !== 'error_analysis.html') {
+				document.body.classList.remove('show-chatbot');
+				// Call teardown if the chatbot script exposed it
+				try { if (window.__chatbot_teardown) window.__chatbot_teardown(); } catch (e) {}
+				// Also remove injected assets so they don't persist
+				var oldCss = document.getElementById('chatbotcss'); if (oldCss) oldCss.remove();
+				var oldJs = document.getElementById('chatbotjs'); if (oldJs) oldJs.remove();
+				var oldFa = document.getElementById('fontawesomecss'); /* keep other FA uses if present */
+			}
+
+			// Helper: inject chatbot CSS + JS idempotently
+			function injectChatbotAssets() {
+				if (!document.getElementById('chatbotcss')) {
+					var link = document.createElement('link');
+					link.rel = 'stylesheet';
+					link.href = './assets/css/chatbot.css';
+					link.id = 'chatbotcss';
+					document.head.appendChild(link);
+				}
+
+				// Ensure Font Awesome for icons
+				if (!document.getElementById('fontawesomecss')) {
+					var fa = document.createElement('link');
+					fa.rel = 'stylesheet';
+					fa.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css';
+					fa.id = 'fontawesomecss';
+					document.head.appendChild(fa);
+				}
+
+				// Load chatbot script (removing any previous instance)
+				var oldChat = document.getElementById('chatbotjs');
+				if (oldChat) oldChat.remove();
+				var chatScript = document.createElement('script');
+				chatScript.src = './assets/js/chatbot.js';
+				chatScript.id = 'chatbotjs';
+				document.body.appendChild(chatScript);
 			}
 		});
 }
