@@ -47,7 +47,21 @@ function loadContent(page) {
 				script.src = './assets/js/error_analysis.js';
 				script.id = 'erroranalysisjs';
 				document.body.appendChild(script);
-			} else if (page === 'index.html') {
+
+			} else if (page === 'resolution.html') {
+				// Load error_analysis.js after error_analysis.html is injected
+				var oldScript = document.getElementById('resolutionjs');
+				if (oldScript) oldScript.remove();
+				var script = document.createElement('script');
+				script.src = './assets/js/resolution.js';
+				script.id = 'resolutionjs';
+				script.onload = function() {
+					if (window.initResolutionAssistant) window.initResolutionAssistant();
+				};
+				document.body.appendChild(script);
+
+			} 
+			else if (page === 'index.html') {
 				// Load IDOC monitoring scripts
 				var oldScript = document.getElementById('idocjs');
 				if (oldScript) oldScript.remove();
@@ -56,6 +70,7 @@ function loadContent(page) {
 				script.id = 'idocjs';
 				document.body.appendChild(script);
 			}
+			
 		});
 }
 </script>
@@ -128,7 +143,7 @@ function loadContent(page) {
 							<i class="metismenu-icon fa-solid fa-network-wired"></i>
 							Partner Drill Down
 						</a>
-						<a href="#" class="main-menu" onclick="loadContent('#')" style="margin-bottom: 10px; margin-top: 20px;">
+						<a href="#" class="main-menu" onclick="loadContent('resolution.html')" style="margin-bottom: 10px; margin-top: 20px;">
 							<i class="metismenu-icon fas fa-comments"></i>
 							Resolution Assistant
 						</a>
