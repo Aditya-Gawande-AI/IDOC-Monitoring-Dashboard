@@ -44,8 +44,7 @@
       floatBtn.style.display = '';
     };
 
-    // Observe body class changes so the chatbot can hide itself when the SPA navigates away
-    // (the SPA toggles `body.show-chatbot` to control availability). When that class is removed
+
     // we should close the window and ensure the float button is hidden.
     var bodyObserver = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
@@ -69,7 +68,6 @@
     });
     bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
-    // Expose a teardown so the SPA shell can fully remove the chatbot when navigating away
     // This will disconnect the observer and remove DOM nodes created by the chatbot.
     window.__chatbot_teardown = function () {
       try { bodyObserver.disconnect(); } catch (e) {}
