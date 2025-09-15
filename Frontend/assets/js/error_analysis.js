@@ -102,3 +102,10 @@ function selectCard(cardKey) {
     setTimeout(function() { initErrorAnalysisCard(retry + 1); }, 100);
   }
 })();
+
+function showErrorAnalysisDefaultCard() {
+  var dynamicCard = document.getElementById('dynamic-card');
+  if (dynamicCard) {
+    selectCard('master');
+  }
+}
