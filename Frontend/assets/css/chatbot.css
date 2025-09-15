@@ -1,0 +1,158 @@
+/* Chatbot styles */
+.chatbot-float-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 2147483647;
+  background: #007bff;
+  color: #fff;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+  font-size: 2rem;
+  transition: background 0.2s;
+  pointer-events: auto;
+  
+}
+.chatbot-window,
+.chatbot-float-btn {
+  /* Default hidden; shown when body has .show-chatbot */
+  display: none;
+}
+
+/* When the app wants the chatbot available, show the floating button only.
+   The chat window stays hidden until the user clicks the button which sets
+   an inline style (display: flex) so it will override these rules. */
+body.show-chatbot .chatbot-float-btn {
+  display: flex !important;
+}
+
+body.show-chatbot .chatbot-window {
+  /* Keep chat window hidden until explicitly opened by script */
+  display: none;
+}
+.chatbot-float-btn:hover {
+  background: #0056b3;
+}
+.chatbot-window {
+  position: fixed;
+  bottom: 100px;
+  right: 32px;
+  width: 340px;
+  max-height: 480px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  z-index: 2147483647;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  animation: chatbot-pop 0.2s;
+}
+@keyframes chatbot-pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.chatbot-header {
+  background: #007bff;
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.chatbot-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.chatbot-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  font-size: 0.98rem;
+  background: #f8f9fa;
+}
+.chatbot-message {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-end;
+}
+.chatbot-message.user {
+  justify-content: flex-end;
+}
+.chatbot-message.bot {
+  justify-content: flex-start;
+}
+.chatbot-bubble {
+  padding: 8px 14px;
+  border-radius: 18px;
+  background: #e9ecef;
+  color: #333;
+  max-width: 80%;
+  word-break: break-word;
+}
+.chatbot-message.user .chatbot-bubble {
+  background: #007bff;
+  color: #fff;
+}
+.chatbot-input-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}
+.chatbot-input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 18px;
+  padding: 8px 14px;
+  font-size: 1rem;
+  outline: none;
+}
+.chatbot-send-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 1.5rem;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.chatbot-send-btn:disabled {
+  color: #aaa;
+  cursor: not-allowed;
+}
+.chatbot-loading {
+  display: inline-block;
+  width: 32px;
+  text-align: left;
+}
+.chatbot-loading span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 2px;
+  background: #007bff;
+  border-radius: 50%;
+  animation: chatbot-bounce 1.2s infinite ease-in-out both;
+}
+.chatbot-loading span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.chatbot-loading span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes chatbot-bounce {
+  0%, 80%, 100% { transform: scale(1); }
+  40% { transform: scale(1.5); }
+}

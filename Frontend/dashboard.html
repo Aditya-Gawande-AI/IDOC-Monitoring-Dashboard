@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: rgb(243, 243, 243)">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IDOC Monitor</title>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description"
+        content="Wide selection of cards with multiple styles, borders, actions and hover effects." />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <link href="./assets/css/main.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/fnon.min.css">
+    <script src="./assets/js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/bootstrap-table.min.css" />
+</head>
+
+<style>
+    /* Custom underline tab style */
+    .nav-tabs .nav-link {
+        border: none !important;
+        background: none !important;
+        color: #0D1B3EB3 !important;
+        /* Plain black for inactive */
+        border-bottom: 2.5px solid transparent;
+        transition: border-color 0.2s, color 0.2s;
+        font-size: 0.80rem !important;
+        padding: 0.2rem 0.6rem !important;
+        min-width: 60px;
+        font-weight: 600;
+    }
+
+    .nav-tabs .nav-link.active,
+    .nav-tabs .nav-link:focus {
+        border-bottom: 2.5px solid #2149ae !important;
+        color: #2149ae !important;
+        background: none !important;
+        font-weight: 700;
+    }
+
+    .nav-tabs .nav-link:hover {
+        color: #16306e;
+    }
+
+    /* Add border to main card and nav header */
+    .main-card-bordered {
+        border: none !important;
+        border-radius: 15px;
+        box-shadow: none;
+    }
+
+    .main-card-bordered .card-title {
+        border-bottom: none;
+        border-radius: 15px 15px 0 0;
+        background: #fff;
+    }
+
+    #messageTable thead th {
+        background-color: #f5f5f5 !important;
+        border-bottom: 3px solid #2149ae !important;
+        color: #333;
+        vertical-align: middle;
+    }
+
+    /* Fix sidebar z-index to appear above modals */
+    #messageDetailsSidebar {
+        z-index: 1060 !important;
+        /* Higher than Bootstrap modal z-index (1050) */
+    }
+
+    .form-control-sm {
+        height: calc(1.525rem + 2px) !important;
+        padding: .25rem .5rem;
+        font-size: .750rem !important;
+        line-height: 1 !important;
+        border-radius: .2rem;
+    }
+
+    .form-control {
+        display: block;
+        width: 100% !important;
+        height: calc(1.45rem + 2px) !important;
+        padding: 0 !important;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.1 !important;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    .btn {
+        line-height: 0.85 !important;
+    }
+
+    /* .col-md-2 {
+        padding-right: 0 !important;
+    } */
+
+    .bootstrap-table .fixed-table-container .table tfoot th .th-inner,
+    .bootstrap-table .fixed-table-container .table thead th .th-inner {
+        padding: 0.45rem !important;
+    }
+
+    .table td {
+        padding: .25rem !important;
+    }
+</style>
+
+<script src="./assets/js/jquery.js"></script>
+
+<body>
+    <!-- Templates -->
+
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+        <div id="top-bar"></div>
+        <div class="ui-theme-settings" id="messageDetailsSidebar">
+            <div class="theme-settings__inner">
+                <div class="scrollbar-container">
+                    <div class="theme-settings__options-wrapper">
+                        <!-- Content will be populated by JavaScript when view button is clicked -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-main" style="padding-top: 45px;">
+            <div id="side-bar"></div>
+
+            <div class="app-main__outer" >
+                <div class=""
+                    style="padding-top: 0 !important;  margin-top: 10px; margin-left: 5px;margin-right: 10px;">
+
+                    <div class="row mt-0">
+                    
+
+                        <div class="col-md-12 mb-3">
+                            <div class="card main-card-bordered" style="border-radius: 10px;">
+                                <div class="card-title p-3 mb-0" style="padding-bottom: 0 !important;">
+                                    <div class="d-flex flex-column">
+                                        <!-- Removed IDOC Monitor title and icon as requested -->
+                                        <!-- <div style="height: 50px;">
+
+                                        </div> -->
+                                        
+
+                                    </div>
+                                </div>
+                                <div class="card-body tab-content">
+                                    <div class="tab-pane fade show active" id="tab1" role="tabpanel"
+                                        style="min-height: 79vh; ">
+                                        <div class="container p-3 mx-0">
+                                            <div class="main-content" id="mainContent"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+        <script>
+            $('#side-bar').load("sidebar.html", function() {
+                // After sidebar loads, load overview by default
+                loadContent('overview.html');
+            });
+
+            $(window).bind("load", function () {
+                $(document).ready(function () {
+                    setTimeout(function () {
+                        $("#ams_main_menu").addClass("mm-active")
+                        $("#ams_side_menu").addClass("mm-show")
+                        $("#message_monitoring_menu").addClass("mm-active")
+                    }, 300);
+                });
+            });
+
+            $(document).on('change', '#dateRangeSelect', function () {
+                const selectedValue = $(this).val();
+
+                if (selectedValue === 'custom') {
+                    $('.date-range-custom').show();
+                } else {
+                    $('.date-range-custom').hide();
+                }
+
+                // Handle past hour and past 24 hours
+                if (selectedValue === 'pastHour' || selectedValue === 'pastDay') {
+                    const now = new Date();
+                    const endTime = now.toISOString().slice(0, 19); // Current time in YYYY-MM-DDTHH:mm:ss format
+
+                    let startTime;
+                    if (selectedValue === 'pastHour') {
+                        const oneHourAgo = new Date(now.getTime() - (60 * 60 * 1000));
+                        startTime = oneHourAgo.toISOString().slice(0, 19);
+                    } else if (selectedValue === 'pastDay') {
+                        const oneDayAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+                        startTime = oneDayAgo.toISOString().slice(0, 19);
+                    }
+
+                    console.log('Date Range Selected:', selectedValue);
+                    console.log('Start Time:', startTime);
+                    console.log('End Time:', endTime);
+                }
+            });
+        </script>
+
+        <script src="./assets/js/bootstrap.min.js"></script>
+        <script src="./assets/js/bootstrap-table.min.js"></script>
+        <script type="text/javascript" src="./assets/js/fnon.min.js"></script>
+        <script type="text/javascript" src="./assets/resources/property.property"></script>
+
+        <script type="text/javascript" defer src="./assets/scripts/message-monitoring.js"></script>
+</body>
+
+<script>
+    $("#top-bar").load("username_header.html");
+</script>
+
+<script type="text/javascript" src="./assets/scripts/main.js"></script>
+
+</html>

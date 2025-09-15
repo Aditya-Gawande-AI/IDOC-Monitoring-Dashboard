@@ -1,0 +1,111 @@
+ body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+    padding: 16px 32px 32px 32px; /* less top padding */
+    margin-left: 0; /* remove sidebar space */
+    margin-top: -10px; /* move slightly up */
+    }
+    .title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #222;
+    }
+    .filter-card {
+      background: #fafbfc;
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin-bottom: 32px;
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+    }
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 200px;
+      flex: 1;
+    }
+    .filter-label {
+      font-size: 0.95rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+    select {
+      padding: 10px 12px;
+      border: 1px solid #d5dbe2;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .metrics-row {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .metric-card {
+      background: #fff;
+      border-radius: 12px;
+      flex: 1;
+      padding: 24px 32px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 200px;
+    }
+    .metric-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #222;
+    }
+    .metric-desc {
+      font-size: 0.95rem;
+      color: #888;
+      margin-bottom: 14px;
+    }
+    .metric-main {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #16213e;
+    }
+    .metric-main.excellent { color: #16213e; }
+    .metric-main.failed { color: #e74c3c; }
+    .metric-note {
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 0;
+      color: #444;
+    }
+    .metric-footer {
+      display: flex;
+      gap: 32px;
+      margin-top: 12px;
+      font-size: 1rem;
+      color: #555;
+    }
+    .trend-up {
+      color: #1abc9c;
+      font-size: 0.95rem;
+      margin-left: 6px;
+    }
+    .trend-down {
+      color: #e74c3c;
+      font-size: 0.95rem;
+      margin-left: 6px;
+    }
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .container { padding: 24px 12px; }
+      .metrics-row { flex-direction: column; gap: 16px; }
+    }

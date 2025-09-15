@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAP IDOC Monitor</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./assets/css/chatbot.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header-section">
+      <h1 class="main-title">AI-powered error resolution</h1>
+      <div class="status-indicator">
+        <span class="status-dot"></span> 
+        <span class="status-text">Online</span>
+      </div>
+    </div>
+
+    <!-- Metrics Cards -->
+    <div class="metrics-cards">
+      <div class="metric-card">
+        <div class="metric-title">Total IDocs (Today)</div>
+        <div class="metric-value tile1-count">Loading...</div>
+        <div class="metric-desc tile1-change">--</div>
+      </div>
+      <div class="metric-card error-card">
+        <div class="metric-title">Active Errors</div>
+        <div class="metric-value tile2-count">Loading...</div>
+        <div class="metric-desc tile2-change">--</div>
+      </div>
+      <div class="metric-card success-card">
+        <div class="metric-title">Successfully Processed</div>
+        <div class="metric-value tile3-count">Loading...</div>
+        <div class="metric-desc tile3-change">--</div>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content-section">
+      <!-- Section Header -->
+      <div class="section-header">
+        <h2 class="section-title">IDOC Error Analysis</h2>
+        <div class="section-controls">
+          <input type="text" id="search-input" placeholder="Search IDOCs..." class="search-input">
+          <button onclick="fetchData()" class="refresh-btn">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+        </div>
+      </div>
+      
+      <!-- Filter Section -->
+      <div class="filter-section">
+        <div class="filter-group">
+          <label>Partner:</label>
+          <select id="partner-filter" class="filter-select">
+            <option value="">All Partners</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Message Type:</label>
+          <select id="msgtype-filter" class="filter-select">
+            <option value="">All Types</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>From:</label>
+          <input type="date" id="date-from" class="filter-date">
+        </div>
+        <div class="filter-group">
+          <label>To:</label>
+          <input type="date" id="date-to" class="filter-date">
+        </div>
+        <button onclick="applyFilters()" class="filter-btn">Apply Filters</button>
+        <button onclick="clearFilters()" class="clear-btn">Clear</button>
+      </div>
+      
+      <!-- Data Table -->
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>IDOC Number</th>
+            <th>Message Type</th>
+            <th>Status</th>
+            <th>Error Message</th>
+            <th>Partner</th>
+            <th>Timestamp</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="7">Loading error data...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script src="./assets/js/chatbot.js"></script>
+</body>
+</html>
