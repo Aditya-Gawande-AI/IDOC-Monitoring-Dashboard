@@ -156,3 +156,15 @@ body.show-chatbot .chatbot-window {
   0%, 80%, 100% { transform: scale(1); }
   40% { transform: scale(1.5); }
 }
+
+/* Code block styling inserted by chatbot formatter */
+.chatbot-code {
+  background: #0b1220;
+  color: #e6edf3;
+  padding: 12px;
+  border-radius: 8px;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', 'Courier New', monospace;
+  font-size: 0.85rem;
+  margin: 8px 0;
+}

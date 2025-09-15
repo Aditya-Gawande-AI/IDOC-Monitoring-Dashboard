@@ -86,12 +86,18 @@
     var inputBox = chatbotWindow.querySelector('.chatbot-input');
     var sendBtn = chatbotWindow.querySelector('.chatbot-send-btn');
 
-    function addMessage(text, sender) {
+    function addMessage(text, sender, isHtml) {
       var msgDiv = document.createElement('div');
       msgDiv.className = 'chatbot-message ' + sender;
       var bubble = document.createElement('div');
       bubble.className = 'chatbot-bubble';
-      bubble.textContent = text;
+      if (isHtml) {
+        // Insert HTML (already sanitized by formatter)
+        bubble.innerHTML = text;
+      } else {
+        // Plain text for user messages
+        bubble.textContent = text;
+      }
       msgDiv.appendChild(bubble);
       messagesDiv.appendChild(msgDiv);
       messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -119,27 +125,88 @@
       sendBtn.disabled = true;
       var loadingMsg = addLoading();
       // Send POST request to AI API
-      fetch('https://ai-bis.cfapps.eu10.hana.ondemand.com/AIAgent/getAI_response/', {
+      fetch('http://127.0.0.1:8000/api/chatbot/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'accept': 'application/json'
         },
         body: JSON.stringify({
-          system_prompt: 'you are helpful assistant',
-          user_prompt: userText
+          // system_prompt: 'you are helpful assistant',
+          // user_prompt: userText
+          user_query: userText
         })
       })
         .then(function (response) {
           if (!response.ok) throw new Error('Network response was not ok');
           return response.json();
         })
-        .then(function (data) {
-          loadingMsg.remove();
-          // Prefer `ai_response` if present, otherwise fall back to other keys
-          var botReply = (data && (data.ai_response || data.response || data.result)) || 'No response';
-          addMessage(botReply, 'bot');
-          sendBtn.disabled = false;
-        })
+          .then(function (data) {
+            loadingMsg.remove();
+            // The new API returns { status: 'success', response: 'text...' }
+            var raw = (data && (data.response || data.ai_response || data.result)) || 'No response';
+
+            // Simple sanitizer: escape HTML special chars to avoid injection
+            function escapeHtml(str) {
+              return str.replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#039;');
+            }
+
+            // Convert simple markdown/code blocks and newlines to HTML.
+            function formatResponse(text) {
+              if (!text) return '';
+              // Normalize CRLF to LF
+              text = text.replace(/\r\n/g, '\n');
+              // Escape HTML first
+              var escaped = escapeHtml(text);
+
+              // Render fenced code blocks ```lang\n...``` and replace them with placeholders so subsequent
+              // replacements (like bold) don't affect code contents.
+              var codeBlocks = [];
+              escaped = escaped.replace(/```([\s\S]*?)```/g, function (m, code) {
+                var placeholder = '___CODE_BLOCK_' + codeBlocks.length + '___';
+                codeBlocks.push(code);
+                return placeholder;
+              });
+
+              // Render headings: lines starting with ###, ##, #
+              escaped = escaped.replace(/^### (.*)$/gm, '<h5>$1</h5>');
+              escaped = escaped.replace(/^## (.*)$/gm, '<h4>$1</h4>');
+              escaped = escaped.replace(/^# (.*)$/gm, '<h3>$1</h3>');
+
+              // Render bold **text** -> <strong>
+              escaped = escaped.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+              // Convert remaining double newlines into paragraph breaks
+              escaped = escaped.replace(/\n\n+/g, '</p><p>');
+              // Single newlines -> <br>
+              escaped = escaped.replace(/\n/g, '<br>');
+
+              // Wrap in a paragraph if not already
+              if (!/^<h|^<p|^<pre/.test(escaped)) {
+                escaped = '<p>' + escaped + '</p>';
+              }
+
+              // Re-insert code blocks into their placeholders, wrapping them in <pre><code>
+              escaped = escaped.replace(/___CODE_BLOCK_(\d+)___/g, function(m, idx) {
+                var code = codeBlocks[Number(idx)] || '';
+                // un-escape any <br> that might have been introduced earlier
+                code = code.replace(/&lt;br&gt;/g, '\n');
+                return '<pre class="chatbot-code"><code>' + code + '</code></pre>';
+              });
+
+              return escaped;
+            }
+
+            var formatted = formatResponse(raw);
+
+            // Add bot message but allow HTML content in bubble
+            addMessage(formatted, 'bot', true);
+            sendBtn.disabled = false;
+          })
         .catch(function (error) {
           loadingMsg.remove();
           addMessage('Sorry, there was an error fetching the response.', 'bot');
