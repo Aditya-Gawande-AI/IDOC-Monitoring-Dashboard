@@ -1,10 +1,6 @@
-# main.py
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import assistant, error_analysis
-from routers import monitoring
-
+from routers import assistant, error_analysis, monitoring, overview  # 👈 Add overview here
 
 app = FastAPI(
     title="SAP iDoc Chatbot API",
@@ -29,8 +25,5 @@ app.add_middleware(
 # Register routers
 app.include_router(assistant.router, prefix="/api/chatbot", tags=["Chatbot"])
 app.include_router(error_analysis.router, prefix="/api/analysis", tags=["Error Analysis"])
-app.include_router(monitoring.router, prefix="/api/monitoring", tags=["monitoring"])
-
-
-
-
+app.include_router(monitoring.router, prefix="/api/monitoring", tags=["Monitoring"])
+app.include_router(overview.router, prefix="/api/overview", tags=["Overview"])  # 👈 Add this line
