@@ -96,9 +96,9 @@ function renderErrorTable(errorList) {
       <td>${error.partner}</td>
       <td>${error.timestamp}</td>
       <td class="actions-cell">
-        <span class="action-btn"><i class="fas fa-eye"></i></span>
-        <span class="action-btn"><i class="fas fa-bolt"></i></span>
-        <span class="action-btn"><i class="fas fa-redo"></i></span>
+        <span class="action-btn" data-tooltip="More Info"><i class="fas fa-eye"></i></span>
+        <span class="action-btn chatgpt-btn" data-tooltip="Ask AI for Help"><img src="assets/images/chatgpt-icon.svg" alt="ChatGPT" class="chatgpt-icon"></span>
+        <span class="action-btn" data-tooltip="Reprocessing"><i class="fas fa-redo"></i></span>
       </td>
     </tr>
   `).join('');
