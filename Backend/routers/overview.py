@@ -4,7 +4,7 @@ import sqlite3
 
 router = APIRouter()
 
-db_path = r"C:\Users\10829029\Downloads\IDOC-Monitoring-Dashboard-main\IDOC-Monitoring-Dashboard-main\Backend\DB\idoc_data.db"
+db_path = "DB\idoc_data.db"
 
 @router.post("/reprocess")
 async def reprocess_idoc(data: dict):
@@ -65,3 +65,4 @@ async def reprocess_idoc(data: dict):
         raise he
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
