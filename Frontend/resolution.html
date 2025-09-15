@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resolution Assistant</title>
+  <link rel="stylesheet" href="assets/css/resolution.css">
+</head>
+<body>
+  <div class="outer-container">
+    <div class="chat-container">
+      <h2>Resolution Assistant</h2>
+      <div class="subheading">AI Resolution Assistant</div>
+      <div class="chat-box" id="chat-box"></div>
+      <form id="chat-form">
+        <textarea id="user-input" placeholder="Ask about an IDoc issue..." rows="1" autocomplete="off" required></textarea>
+        <button type="submit" aria-label="Send message">
+          <!-- Paper plane SVG -->
+          <svg height="24" width="24" viewBox="0 0 24 24" fill="none">
+            <path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="#253858"/>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </div>
+  <script src="assets/js/resolution.js"></script>
+</body>
+</html>

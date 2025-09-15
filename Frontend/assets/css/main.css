@@ -1,3 +1,14 @@
+/* Sidebar active button highlight */
+.vertical-nav-menu .main-menu.active {
+	background: linear-gradient(90deg, #2149ae 0%, #4e7fff 100%);
+	color: #fff !important;
+	border-radius: 8px;
+	font-weight: 700;
+	box-shadow: 0 2px 8px rgba(33,73,174,0.08);
+}
+.vertical-nav-menu .main-menu.active i {
+	color: #fff !important;
+}
 /*!
  =========================================================
  * ArchitectUI HTML Theme Dashboard - v1.0.0
@@ -10568,10 +10579,17 @@ button,
 .app-header__logo {
 	padding: 0 1.5rem;
 	height: 60px;
-	width: 280px;
+	min-width: 200px;
+	width: auto;
 	display: flex;
 	align-items: center;
-	transition: width .2s
+	transition: width .2s;
+	flex-shrink: 0;
+}
+/* Prevent logo-text from wrapping or shrinking */
+.app-header__logo .logo-text {
+	white-space: nowrap;
+	flex-shrink: 0;
 }
 
 .app-header__logo .logo-src {

@@ -1,4 +1,3 @@
-
 var express = require("express");
 const multer = require('multer');
 const cors = require('cors');
@@ -19,6 +18,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(express.static(__dirname + "/", { index: "dashboard.html" }));
+
+// Serve the assets folder explicitly
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 const port = process.env.PORT || 5000;
 
