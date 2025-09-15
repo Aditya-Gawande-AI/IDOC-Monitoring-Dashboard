@@ -1,0 +1,28 @@
+.venv
+venv/
+# Environment files
+.env
+.env.*
+.env.local
+
+# Python cache and compiled files
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+
+# IDEs and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
