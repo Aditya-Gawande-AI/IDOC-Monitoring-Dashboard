@@ -5,7 +5,7 @@ import sqlite3
 router = APIRouter()
 
 # Update the path to your SQLite DB file in the DB folder
-db_path = r"C:\Users\10829029\Downloads\IDOC-Monitoring-Dashboard-main\IDOC-Monitoring-Dashboard-main\Backend\DB\idoc_data.db"
+db_path = "DB\idoc_data.db"
 
 @router.get("/edids-data")
 async def get_edids_data():
@@ -25,3 +25,4 @@ async def get_edids_data():
         return JSONResponse(content=data)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
