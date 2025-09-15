@@ -2,6 +2,8 @@
 
 from fastapi import FastAPI
 from routers import assistant, error_analysis
+from routers import monitoring
+
 
 app = FastAPI(
     title="SAP iDoc Chatbot API",
@@ -12,3 +14,8 @@ app = FastAPI(
 # Register routers
 app.include_router(assistant.router, prefix="/api/chatbot", tags=["Chatbot"])
 app.include_router(error_analysis.router, prefix="/api/analysis", tags=["Error Analysis"])
+app.include_router(monitoring.router, prefix="/api/monitoring", tags=["monitoring"])
+
+
+
+
