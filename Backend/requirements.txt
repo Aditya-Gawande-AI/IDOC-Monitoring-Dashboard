@@ -1,0 +1,6 @@
+uvicorn
+fastapi
+xmltodict
+generative-ai-hub-sdk[all]
+langchain
+requests
