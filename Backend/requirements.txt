@@ -4,3 +4,5 @@ xmltodict
 generative-ai-hub-sdk[all]
 langchain
 requests
+pandas
+openpyxl
