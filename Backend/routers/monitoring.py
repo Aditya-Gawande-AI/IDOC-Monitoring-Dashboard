@@ -1,25 +1,27 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-import pandas as pd
-import datetime
+import sqlite3
 
 router = APIRouter()
 
-excel_file_path = r"C:\Users\10735219\IDOC-Monitoring-Dashboard-main\IDOC-Monitoring-Dashboard-main\Backend\DB\EDIDS.xlsx"
+# Update the path to your SQLite DB file in the DB folder
+db_path = r"C:\Users\10829029\Downloads\IDOC-Monitoring-Dashboard-main\IDOC-Monitoring-Dashboard-main\Backend\DB\idoc_data.db"
 
 @router.get("/edids-data")
 async def get_edids_data():
     try:
-        df = pd.read_excel(excel_file_path, engine='openpyxl')
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT idoc_number, sender, receiver, date_created, time_st_created, status, person_to_notify, status_text, message_type
+            FROM idoc_data
+        """)
+        rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        conn.close()
 
-        # Convert datetime and time columns to string
-        for col in df.columns:
-            if pd.api.types.is_datetime64_any_dtype(df[col]):
-                df[col] = df[col].astype(str)
-            elif df[col].apply(lambda x: isinstance(x, datetime.time)).any():
-                df[col] = df[col].apply(lambda x: x.strftime('%H:%M:%S') if isinstance(x, datetime.time) else x)
-
-        data = df.to_dict(orient="records")
+        # Convert rows to list of dicts
+        data = [dict(zip(columns, row)) for row in rows]
         return JSONResponse(content=data)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
