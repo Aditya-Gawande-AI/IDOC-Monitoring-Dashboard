@@ -86,9 +86,28 @@ function renderCard(cardKey) {
 }
  
 function selectCard(cardKey) {
-  document.querySelectorAll('.error-card').forEach(card => card.classList.remove('card-active'));
-  document.querySelector('.error-card[data-card="' + cardKey + '"]').classList.add('card-active');
-  document.getElementById('dynamic-card').innerHTML = renderCard(cardKey);
+    // Remove active class from all cards
+    document.querySelectorAll('.error-card').forEach(card => card.classList.remove('card-active'));
+    // Add active class to the clicked card
+    const selected = document.querySelector(`.error-card[data-card="${cardKey}"]`);
+    if (selected) selected.classList.add('card-active');
+
+    // Map cardKey to your actual image files
+    const imageMap = {
+        master: 'error during.jpg',           // Error During creation of payment request
+        partner: 'No account found.jpg',      // No internal account found
+        mapping: 'Bank details.jpg',          // Bank account details are missing
+        technical: 'Bank area.jpg'            // Bank area does not exist
+    };
+
+    // Build image path
+    const imagePath = `./assets/images/${imageMap[cardKey]}`;
+
+    // Inject image into the dynamic-card container
+    const dynamicCard = document.getElementById('dynamic-card');
+    dynamicCard.innerHTML = `
+        <img src="${imagePath}" alt="Error Analysis Image" style="max-width:100%;border-radius:12px;box-shadow:0 2px 8px rgba(60,60,60,0.07);margin:auto;display:block;">
+    `;
 }
  
 

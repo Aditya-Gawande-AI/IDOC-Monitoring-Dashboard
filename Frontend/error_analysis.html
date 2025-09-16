@@ -17,26 +17,26 @@
       <div class="error-cards-list">
         <div class="error-card card-active" data-card="master" onclick="selectCard('master')">
           <span class="icon error-db material-symbols-outlined">database</span>
-          <div class="error-name">Master Data Missing</div>
-          <div class="error-value">125</div>
+          <div class="error-name">Error During creation of payment request</div>
+          <div class="error-value">3</div>
           <div class="error-change positive">+15.3% from last week</div>
         </div>
         <div class="error-card" data-card="partner" onclick="selectCard('partner')">
           <span class="icon error-user material-symbols-outlined">person</span>
-          <div class="error-name">Partner Profile Issue</div>
-          <div class="error-value">89</div>
+          <div class="error-name">No internal account found</div>
+          <div class="error-value">5</div>
           <div class="error-change">-8.1% from last week</div>
         </div>
         <div class="error-card" data-card="mapping" onclick="selectCard('mapping')">
           <span class="icon error-warning material-symbols-outlined">warning</span>
-          <div class="error-name">Mapping Error</div>
-          <div class="error-value">52</div>
+          <div class="error-name">Bank account details are missing</div>
+          <div class="error-value">6</div>
           <div class="error-change warning">+5.7% from last week</div>
         </div>
         <div class="error-card" data-card="technical" onclick="selectCard('technical')">
           <span class="icon error-wrench material-symbols-outlined">build</span>
-          <div class="error-name">Technical Failure</div>
-          <div class="error-value">31</div>
+          <div class="error-name">Bank area does not exist</div>
+          <div class="error-value">3</div>
           <div class="error-change info">+1.2% from last week</div>
         </div>
       </div>
@@ -51,5 +51,11 @@
   </div>
   <script src="./assets/js/error_analysis.js"></script>
   <script src="./assets/js/chatbot.js"></script>
+  <script>
+    // Show the first card's image by default on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      selectCard('master');
+    });
+  </script>
 </body>
 </html>
