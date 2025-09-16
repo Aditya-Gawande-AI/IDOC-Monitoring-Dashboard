@@ -90,57 +90,5 @@
       </div>
     </div>
   </div>
-  <script>
-    // Sample data
-    const partnerData = {
-      vendorA: {
-        healthScore: { title: "Vendor A (10001) Health Score", note: "Excellent", value: "88%", totalIdocs: "5,876", avgProcTime: "120 ms" },
-        successRate: { value: "94.5%", trend: { text: "2.1% increase vs last period", up: true } },
-        failedIdocs: { value: "123", trend: { text: "5.8% increase vs last period", up: false } },
-        errorTypes: ["Type X - 45%", "Type Y - 28%", "Type Z - 19%", "Type Q - 6%", "Type W - 2%"],
-        processingVolume: "5.8K",
-        avgLatency: "120 ms"
-      },
-      vendorB: {
-        healthScore: { title: "Vendor B (10002) Health Score", note: "Good", value: "76%", totalIdocs: "4,320", avgProcTime: "150 ms" },
-        successRate: { value: "86.2%", trend: { text: "1.4% decrease vs last period", up: false } },
-        failedIdocs: { value: "167", trend: { text: "3.2% increase vs last period", up: false } },
-        errorTypes: ["Type Y - 51%", "Type X - 21%", "Type Z - 18%", "Type Q - 7%", "Type W - 3%"],
-        processingVolume: "4.3K",
-        avgLatency: "150 ms"
-      }
-    };
-
-    document.getElementById('partner-select').addEventListener('change', function() {
-      const partner = this.value;
-      updateMetrics(partner);
-    });
-
-    function updateMetrics(partnerKey) {
-      const data = partnerData[partnerKey];
-      document.getElementById('health-score-title').textContent = data.healthScore.title;
-      document.getElementById('health-score-note').textContent = data.healthScore.note;
-      document.getElementById('health-score-value').textContent = data.healthScore.value;
-      document.getElementById('total-idocs').textContent = `${data.healthScore.totalIdocs} Total IDocs`;
-      document.getElementById('avg-proc-time').textContent = `${data.healthScore.avgProcTime} Avg. Proc. Time`;
-
-      document.getElementById('success-rate-value').textContent = data.successRate.value;
-      document.getElementById('success-rate-trend').innerHTML = (data.successRate.trend.up ? '&#8599; ' : '&#8600; ') + data.successRate.trend.text;
-      document.getElementById('success-rate-trend').className = data.successRate.trend.up ? 'trend-up' : 'trend-down';
-
-      document.getElementById('failed-idocs-value').textContent = data.failedIdocs.value;
-      document.getElementById('failed-idocs-trend').innerHTML = (data.failedIdocs.trend.up ? '&#8599; ' : '&#8600; ') + data.failedIdocs.trend.text;
-      document.getElementById('failed-idocs-trend').className = data.failedIdocs.trend.up ? 'trend-up' : 'trend-down';
-
-      document.getElementById('error-types').innerHTML = "<ol style='padding-left:16px;'>" +
-        data.errorTypes.map(e => `<li>${e}</li>`).join('') + "</ol>";
-
-      document.getElementById('processing-volume').textContent = data.processingVolume;
-      document.getElementById('avg-latency').textContent = data.avgLatency;
-    }
-
-    // Initial load
-    updateMetrics('vendorA');
-  </script>
-
+  <script src="assets/js/partner-drilldown.js"></script>
 </html>
