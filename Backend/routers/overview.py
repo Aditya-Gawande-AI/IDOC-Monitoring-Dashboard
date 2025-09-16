@@ -4,6 +4,7 @@ import sqlite3
 
 router = APIRouter()
 
+<<<<<<< HEAD
 db_path = "DB\\idoc_data.db"
 
 @router.get("/idoc-count")
@@ -37,6 +38,9 @@ async def get_filtered_data(application: str = None):
         return JSONResponse(content=result)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+=======
+db_path = "DB\idoc_data.db"
+>>>>>>> 74ca2a1b05b53a49b51dbc62166ef3c3630fd73a
 
 @router.post("/reprocess")
 async def reprocess_idoc(data: dict):
@@ -97,3 +101,4 @@ async def reprocess_idoc(data: dict):
         raise he
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+

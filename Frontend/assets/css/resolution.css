@@ -95,7 +95,7 @@ h2 {
   color: #2149ae;              /* Highlighted color */
   font-weight: 700;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 8px #e4ecfa;
+  /* text-shadow: 0 2px 8px #e4ecfa; */
   background: linear-gradient(90deg, #2149ae 60%, #4f8cff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

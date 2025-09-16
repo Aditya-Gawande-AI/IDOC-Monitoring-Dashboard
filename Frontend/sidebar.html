@@ -46,6 +46,9 @@ function loadContent(page) {
 				var script = document.createElement('script');
 				script.src = './assets/js/error_analysis.js';
 				script.id = 'erroranalysisjs';
+				script.onload = function() {
+					if (window.showErrorAnalysisDefaultCard) window.showErrorAnalysisDefaultCard();
+				};
 				document.body.appendChild(script);
 
 				// Inject chatbot assets only for Error Analysis

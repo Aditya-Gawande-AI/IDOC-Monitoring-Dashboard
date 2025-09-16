@@ -1,8 +1,6 @@
 function initResolutionAssistant() {
-  // Replace these with your actual credentials
-  const API_URL = "https://ai-bis.cfapps.eu10.hana.ondemand.com/AIAgent/getAI_response/";
-  const USERNAME = "10837890";
-  const PASSWORD = "Sunday@2025";
+  // Updated to use the new local FastAPI endpoint
+  const API_URL = "http://127.0.0.1:8000/api/chatbot/chat";
 
   const chatBox = document.getElementById('chat-box');
   const chatForm = document.getElementById('chat-form');
@@ -28,8 +26,11 @@ function initResolutionAssistant() {
     msgDiv.className = `message`;
     const cardDiv = document.createElement('div');
     cardDiv.className = `card ${sender}`;
-    cardDiv.innerText = text;
-
+    if (sender === 'assistant') {
+      cardDiv.innerHTML = text; // Allow HTML for assistant to render <strong>
+    } else {
+      cardDiv.innerText = text;
+    }
     const timestampDiv = document.createElement('div');
     timestampDiv.className = 'timestamp';
     timestampDiv.innerText = formatTime(new Date());
@@ -50,15 +51,13 @@ function initResolutionAssistant() {
     userInput.style.height = 'auto';
 
     const payload = {
-      "system_prompt": "you are helpful assistant",
-      "user_prompt": userText
+      "user_query": userText
     };
 
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'Authorization': 'Basic ' + btoa(`${USERNAME}:${PASSWORD}`),
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
@@ -67,10 +66,10 @@ function initResolutionAssistant() {
       if (!response.ok) throw new Error('API error');
       const data = await response.json();
 
-      // Format assistant response for readability
-      let reply = data.ai_response || 'No response received.';
-      // You can add formatting logic here if needed
-
+      // Get assistant response from the API's "response" field
+      let reply = data.response || 'No response received.';
+      // Replace **text** with <strong>text</strong>
+      reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
       addMessage(reply, 'assistant');
     } catch (err) {
       addMessage('Sorry, there was an error connecting to the assistant.', 'assistant');
@@ -83,3 +82,6 @@ function initResolutionAssistant() {
 
 // Make it globally available
 window.initResolutionAssistant = initResolutionAssistant;
+window.addEventListener('DOMContentLoaded', function() {
+  initResolutionAssistant();
+});
