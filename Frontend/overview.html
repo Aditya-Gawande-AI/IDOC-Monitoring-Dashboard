@@ -90,7 +90,7 @@
 	<div class="overview-cards">
 		<div class="overview-card">
 			<div class="overview-card-title">Total IDocs (Today)</div>
-			<div class="overview-card-value">15,890</div>
+			<div id="total-idocs-today" class="overview-card-value">Loading…</div>
 			<div class="overview-card-desc">+12% vs. yesterday</div>
 		</div>
 		<div class="overview-card">
@@ -120,12 +120,12 @@
 				<thead>
 					<tr><th>Error</th><th>Count</th></tr>
 				</thead>
-				<tbody>
-					<tr><td>Missing Partner Profile</td><td>12</td></tr>
-					<tr><td>Invalid Segment</td><td>8</td></tr>
-					<tr><td>Timeout</td><td>5</td></tr>
-					<tr><td>Authorization Error</td><td>3</td></tr>
-					<tr><td>Syntax Error</td><td>2</td></tr>
+				<tbody id="top-errors-tbody">
+					<tr><td>Bank account details are missing</td><td>12</td></tr>
+					<tr><td>No internal account found</td><td>8</td></tr>
+					<tr><td>Bank area does not exist</td><td>5</td></tr>
+					<tr><td>Error during creation of a payment request</td><td>3</td></tr>
+					<tr><td>Bank area does not exist</td><td>2</td></tr>
 				</tbody>
 			</table>
 		</div>
@@ -148,4 +148,4 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./assets/js/overview.js"></script>
-
+<script src="./assets/js/total-idocs.js"></script>

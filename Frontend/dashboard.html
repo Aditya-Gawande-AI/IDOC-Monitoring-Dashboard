@@ -229,6 +229,108 @@
 
 <script>
     $("#top-bar").load("username_header.html");
+
+    // New script to handle dynamic content loading and updates
+    $(document).ready(function() {
+        // Function to fetch and update the total IDocs count
+        const fetchTotalIdocs = async () => {
+            const el = $('#total-idocs-today');
+            if (el.length === 0) {
+                // If the element doesn't exist yet, wait and try again.
+                // This can happen if the overview page is still loading.
+                setTimeout(fetchTotalIdocs, 200);
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/monitoring/edids-data', { cache: 'no-store' });
+                if (!response.ok) {
+                    el.text('Error');
+                    return;
+                }
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    el.text(data.length.toLocaleString());
+                } else {
+                    el.text('N/A');
+                }
+            } catch (error) {
+                console.error("Failed to fetch total IDocs:", error);
+                el.text('Error');
+            }
+        };
+
+        // Function to fetch and update the top errors table
+        const fetchTopErrors = async () => {
+            const tbody = $('#top-errors-tbody');
+            if (tbody.length === 0) {
+                setTimeout(fetchTopErrors, 200);
+                return;
+            }
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/monitoring/edids-data', { cache: 'no-store' });
+                if (!response.ok) {
+                    tbody.html('<tr><td colspan="2">Error loading data</td></tr>');
+                    return;
+                }
+                const data = await response.json();
+                if (!Array.isArray(data)) {
+                    tbody.html('<tr><td colspan="2">Invalid data format</td></tr>');
+                    return;
+                }
+
+                const errorCounts = data.reduce((acc, item) => {
+                    if (item.status_text) {
+                        acc[item.status_text] = (acc[item.status_text] || 0) + 1;
+                    }
+                    return acc;
+                }, {});
+
+                const sortedErrors = Object.entries(errorCounts)
+                    .sort(([, a], [, b]) => b - a)
+                    .slice(0, 5);
+
+                tbody.empty(); // Clear existing rows
+                if (sortedErrors.length > 0) {
+                    sortedErrors.forEach(([error, count]) => {
+                        tbody.append(`<tr><td>${error}</td><td>${count}</td></tr>`);
+                    });
+                } else {
+                    tbody.append('<tr><td colspan="2">No errors to display</td></tr>');
+                }
+
+            } catch (error) {
+                console.error("Failed to fetch top errors:", error);
+                tbody.html('<tr><td colspan="2">Error loading data</td></tr>');
+            }
+        };
+
+        // Use a MutationObserver to detect when the overview page is loaded
+        const mainContent = document.querySelector('.app-main__inner');
+        if (mainContent) {
+            const observer = new MutationObserver((mutationsList, observer) => {
+                const overviewLoaded = $('#total-idocs-today').length > 0 && $('#top-errors-tbody').length > 0;
+                if (overviewLoaded) {
+                    console.log('Overview content fully loaded. Fetching all data.');
+                    fetchTotalIdocs();
+                    fetchTopErrors();
+                    setInterval(fetchTotalIdocs, 15000);
+                    setInterval(fetchTopErrors, 15000); // Also poll errors
+                    observer.disconnect();
+                }
+            });
+            observer.observe(mainContent, { childList: true, subtree: true });
+        }
+
+        // Fallback for initial load
+        if ($('#total-idocs-today').length && $('#top-errors-tbody').length) {
+             fetchTotalIdocs();
+             fetchTopErrors();
+             setInterval(fetchTotalIdocs, 15000);
+             setInterval(fetchTopErrors, 15000);
+        }
+    });
 </script>
 
 <script type="text/javascript" src="./assets/scripts/main.js"></script>
