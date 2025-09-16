@@ -181,11 +181,7 @@
 
             $(window).bind("load", function () {
                 $(document).ready(function () {
-                    setTimeout(function () {
-                        $("#ams_main_menu").addClass("mm-active")
-                        $("#ams_side_menu").addClass("mm-show")
-                        $("#message_monitoring_menu").addClass("mm-active")
-                    }, 300);
+                    // Removed automatic menu activation to prevent redirects
                 });
             });
 

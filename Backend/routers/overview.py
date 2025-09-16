@@ -4,7 +4,39 @@ import sqlite3
 
 router = APIRouter()
 
-db_path = r"C:\Users\10829029\Downloads\IDOC-Monitoring-Dashboard-main\IDOC-Monitoring-Dashboard-main\Backend\DB\idoc_data.db"
+db_path = "DB\\idoc_data.db"
+
+@router.get("/idoc-count")
+async def get_idoc_count():
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM idoc_data")
+        rows = cursor.fetchall()
+        conn.close()
+        return {"count": len(rows)}
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+@router.get("/filtered-data")
+async def get_filtered_data(application: str = None):
+    try:
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+        
+        if application:
+            cursor.execute("SELECT * FROM idoc_data WHERE message_type LIKE ?", (f"%{application}%",))
+        else:
+            cursor.execute("SELECT * FROM idoc_data")
+            
+        rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        conn.close()
+        
+        result = [dict(zip(columns, row)) for row in rows]
+        return JSONResponse(content=result)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 @router.post("/reprocess")
 async def reprocess_idoc(data: dict):

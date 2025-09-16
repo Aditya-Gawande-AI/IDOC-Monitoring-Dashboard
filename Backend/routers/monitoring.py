@@ -5,7 +5,7 @@ import sqlite3
 router = APIRouter()
 
 # Update the path to your SQLite DB file in the DB folder
-db_path = r"C:\Users\10829029\Downloads\IDOC-Monitoring-Dashboard-main\IDOC-Monitoring-Dashboard-main\Backend\DB\idoc_data.db"
+db_path = "DB\idoc_data.db"
 
 @router.get("/edids-data")
 async def get_edids_data():
@@ -20,7 +20,7 @@ async def get_edids_data():
         columns = [desc[0] for desc in cursor.description]
         conn.close()
 
-        # Convert rows to list of dicts
+        # Convert rows to list of dicts using len()
         data = [dict(zip(columns, row)) for row in rows]
         return JSONResponse(content=data)
     except Exception as e:

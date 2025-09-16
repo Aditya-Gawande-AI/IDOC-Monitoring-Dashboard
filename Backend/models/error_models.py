@@ -23,7 +23,7 @@ for key, value in env_vars.items():
     os.environ[key] = value
 
 # Initialize LLM
-llm = init_llm("gpt-4o", max_tokens=1000)
+llm = init_llm("gpt-4o", max_tokens=2000)
 
 # Prompt and chain
 askai_prompt = PromptTemplate(
